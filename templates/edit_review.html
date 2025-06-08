@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Review{% endblock %}
+
+{% block content %}
+  <h2>Edit Your Review</h2>
+  <form method="POST">
+    <input type="hidden" name="coach_id" value="{{ review.coach_ID }}">
+  
+    <label for="rating">Rating:</label>
+    <div class="left-align">
+      <div class="star-rating">
+        {% for i in range(5, 0, -1) %}
+          <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}"
+                 {% if review.rating == i %}checked{% endif %}>
+          <label for="star{{ i }}">&#9733;</label>
+        {% endfor %}
+      </div>
+    </div>
+  
+    <label for="comment">Comment:</label><br>
+    <textarea name="comment" required>{{ review.comment }}</textarea><br>
+  
+    <input type="submit" value="Update Review">
+  </form>
+  
+{% endblock %}

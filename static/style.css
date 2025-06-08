@@ -1,0 +1,107 @@
+/* style.css */
+
+html, body {
+    font-family: "Space Grotesk", sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #F0E5D8;
+    color: #3E3E3E;
+    position: relative;
+}
+
+header, footer {
+    background-color: #004D2C;
+    background-color: #F0E5D8; 
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+h1, h2, h3 {
+    color: #9B1C31;
+}
+
+.coach-card {
+    border: 2px solid #3E3E3E;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-align{
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+    gap: 5px;
+  }
+  
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+  
+  .star-rating label {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .star-rating input[type="radio"]:checked ~ label,
+  .star-rating label:hover,
+  .star-rating label:hover ~ label {
+    color: #FFD700;
+  }
+  
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #9B1C31;
+}
+
+.search-bar input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #004D2C;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-bar input[type="submit"] {
+    padding: 8px 15px;
+    background-color: #D1A15D;
+    border: 1px solid #3E3E3E;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.search-bar input[type="submit"]:hover {
+    background-color: #B28B54;
+}
+
+.star-rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.star-rating i {
+    font-size: 20px;
+    color: #FFD700;
+    margin-right: 5px;
+}
+
+footer {
+    background-color: #004D2C;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}

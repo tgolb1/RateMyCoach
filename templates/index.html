@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Rate My Coach{% endblock %}
+
+{% block content %}
+  <h1>RATE MY COACH</h1>
+  <p>Find reviews and ratings for college baseball coaches</p>
+
+  <h2>Browse Coaches</h2>
+  <a href="/coaches">Go to Coaches</a>
+
+  <h2>Featured Coaches</h2>
+  {% if featured_coaches %}
+    <ul>
+      {% for coach in featured_coaches %}
+        <li>
+          <a href="/coach/{{ coach.coach_ID }}">
+            {{ coach.name }} – {{ coach.team }} ({{ coach.avg_rating }} ★ - {{ coach.review_count }} reviews)
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No featured coaches yet.</p>
+  {% endif %}
+
+
+{% endblock %}

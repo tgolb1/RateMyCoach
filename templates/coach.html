@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{ coach.name }}{% endblock %}
+
+{% block content %}
+<h2>{{ coach.name }} ({{ coach.team }})</h2>
+
+{% if avg_rating %}
+    <p><strong>Average Rating:</strong> {{ "%.2f"|format(avg_rating) }} / 5</p>
+{% else %}
+    <p><em>No reviews yet.</em></p>
+{% endif %}
+
+  <h3>Reviews</h3>
+
+  {% if reviews %}
+  <form method="GET" action="/export_reviews/{{ coach.coach_ID }}">
+    <button type="submit">Download Reviews as CSV</button>
+  </form>
+  {% endif %}
+  
+  <ul>
+    {% for review in reviews %}
+    {% if not review.is_deleted %}
+      <li>
+        <strong>{{ review.username }}</strong>: 
+        Rated {{ review.rating }}/5 – "{{ review.comment }}"
+  
+        {% if session.get('user_id') == review.u_ID %}
+          <form method="GET" action="/edit_review/{{ review.r_ID }}" style="display:inline;">
+            <button type="submit" class="button">Edit</button>
+          </form>
+          <form method="POST" action="/delete_review/{{ review.r_ID }}" style="display:inline;">
+            <button type="submit" class="button">Delete</button>
+          </form>
+        {% endif %}
+      </li>
+    {% endif %}
+  {% endfor %}  
+  </ul>
+
+  {% if session.get('user_id') %}
+    <h3>Leave a Review</h3>
+    <form method="POST" action="/submit_review">
+        <input type="hidden" name="coach_id" value="{{ coach.coach_ID }}">
+    
+        <label for="rating">Rating:</label>
+        <div class="left-align">
+          <div class="star-rating">
+            {% for i in range(5, 0, -1) %}
+              <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required>
+              <label for="star{{ i }}">&#9733;</label>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <label for="comment">Comment:</label><br>
+        <textarea name="comment" required></textarea><br>
+        <input type="submit" value="Submit Review">
+    </form>
+    
+  {% else %}
+    <p><a href="/login">Log in</a> to leave a review.</p>
+  {% endif %}
+
+{% endblock %}

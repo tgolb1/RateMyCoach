@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Coaches</h1>
+
+  <form action="/coaches" method="get" style="margin-bottom: 20px;">
+    <input type="text" name="search" placeholder="Search by name or team" value="{{ search_query or '' }}">
+    <input type="submit" value="Search">
+  </form>
+
+  {% if coaches %}
+    {% for coach in coaches %}
+      <a href="/coach/{{ coach.coach_ID }}">
+        <div class="coach-card">
+          <div>
+            <h2>{{ coach.name }}</h2>
+            <p>{{ coach.team }}</p>
+            <h5>{{ coach.avg_rating }}/5</h5>
+          </div>
+          {% if coach.review_text %}
+            <p><strong>Most Recent Review:</strong> {{ coach.review_text }}</p>
+          {% else %}
+            <p>No reviews yet.</p>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  {% else %}
+    <p>No coaches found.</p>
+  {% endif %}
+{% endblock %}

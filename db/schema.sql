@@ -1,7 +1,7 @@
 -- CREATE DATABASE/TABLES
 
-CREATE DATABASE IF NOT EXISTS RateMyCoach;
-USE RateMyCoach;
+-- CREATE DATABASE IF NOT EXISTS RateMyCoach;
+-- USE RateMyCoach;
 
 -- Division Table
 CREATE TABLE Division (
@@ -49,6 +49,8 @@ CREATE TABLE Review (
     FOREIGN KEY (u_ID) REFERENCES User(u_ID),
     FOREIGN KEY (coach_ID) REFERENCES Coach(coach_ID)
 );
+ALTER TABLE Review ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
 
 CREATE TABLE ReviewLog (
     log_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -60,13 +62,7 @@ CREATE TABLE ReviewLog (
     FOREIGN KEY (coach_ID) REFERENCES Coach(coach_ID)
 );
 
-ALTER TABLE Coach ADD FULLTEXT(name, team);
-
-
-
-
--- CREATE TRIGGERS --
-DELIMITER //
+-- Triggers
 
 CREATE TRIGGER update_avg_rating_after_review_insert
 AFTER INSERT ON Review
@@ -79,7 +75,7 @@ BEGIN
         WHERE coach_ID = NEW.coach_ID AND is_deleted = FALSE
     )
     WHERE coach_ID = NEW.coach_ID;
-END //
+END;
 
 CREATE TRIGGER update_avg_rating_after_review_update
 AFTER UPDATE ON Review
@@ -92,7 +88,7 @@ BEGIN
         WHERE coach_ID = NEW.coach_ID AND is_deleted = FALSE
     )
     WHERE coach_ID = NEW.coach_ID;
-END //
+END;
 
 CREATE TRIGGER update_avg_rating_after_review_delete
 AFTER DELETE ON Review
@@ -105,9 +101,9 @@ BEGIN
         WHERE coach_ID = OLD.coach_ID AND is_deleted = FALSE
     )
     WHERE coach_ID = OLD.coach_ID;
-END //
+END;
 
-DELIMITER ;
+
 
 
 -- INSERT SAMPLE DATA --
@@ -1001,11 +997,7 @@ INSERT INTO Coach (name, team, con_ID) VALUES
 ('Glenn Wyatt', 'Stockton University', 26),
 ('Steve Struble', 'Stockton University', 26);
 
-
-ALTER TABLE Review ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
-
-
-
+/*
 CREATE VIEW CoachWithDivision AS
 
 SELECT c.name AS coach_name, c.team, conf.name AS conference_name, d.name AS division_name
@@ -1014,3 +1006,5 @@ JOIN Conference conf ON c.con_ID = conf.con_ID
 JOIN Division d ON conf.div_ID = d.div_ID;
 
 SELECT * FROM CoachWithDivision;
+
+*/
